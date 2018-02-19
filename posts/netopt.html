@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Network Security Blogs and Posts">
+        <meta name="author" content="Edward Mooney">
+    <title>Spyderops Network Optimization</title>
+    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
+    <link rel="stylesheet" type="text/css" href="../css/custom.css">
+    <!-- jQuery -->
+    <script src="../js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- clock js -->
+        <script src="../js/clocklib_v0.1.js"></script>
+        <script src="../js/date.js"></script>
+    <!-- end clock js -->
+<!-- begin no right click script -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        $(this).bind("contextmenu", function(e) {
+            e.preventDefault();
+        });
+    });
+</script>
+<!-- end no right click script -->
+</head>
+<body>
+        <!-- clock JavaScript -->
+<script>
+var clockHandler;
+window.onload = function()
+{
+    clockHandler = new Clock( 20/*, "clockClass"*/ );
+    clockHandler.startStop();
+}
+</script>
+<!-- End clock JavaScript -->
+<!-- navbar -->
+<div class="container">
+<!-- Static navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+<div class="container-fluid">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+    <a class="navbar-brand" href="http://www.spyderops.net/"><img src="../images/logo2.png" alt="site logo"/></a>
+</div>
+<div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li class="active"><a href="/">Home</a></li>
+<li><a href="posts/about.html">About</a></li>
+<li><a href="../gallery/">Gallery</a></li>
+</ul>
+</div><!--/.nav-collapse -->
+</div><!--/.container-fluid -->
+</nav>
+<!-- Main Section -->
+<div class="jumbotron">
+<h1>Edward Mooney</h1>
+<p>Nice little hacks to keep you busy, I have a bit of everything here and add to it whenever I can.</p>
+<p>
+<a class="btn btn-lg btn-primary" href="../gallery/" role="button">See my photo's  here &raquo;</a>
+</p>
+</div>
+<!-- end navbar -->
+<!-- /container -->
+<div class="container-fluid">
+<!-- Left Column -->
+<div class="col-sm-3">
+<!-- Text Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-bullhorn"></span> 
+Recent Posts
+</h3>
+</div>
+<div class="panel-body">
+    <ul>
+        <li><a href="weatherpy.html">Python and Open Weather Map API</a></li>
+        <li><a href="rtrcrack.html">Crack A Password</a></li>
+        <li><a href="sshmac.html">SSH From McDonalds</a></li>
+        <li><a href="openssh.html">OpenSSH</a></li>
+        <li><a href="lvm.html">Logical Volume Management</a></li>
+        <li><a href="netopt.html">Network Optimization</a></li>
+    </ul>
+</div>
+</div>
+<!-- List-Group Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span> Categories</h1>
+</div>
+<div class="list-group">
+<a href="#" class="list-group-item">Networking</a>
+<a href="#" class="list-group-item">Security</a>
+<a href="#" class="list-group-item">Linux</a>
+<a href="#" class="list-group-item">Programming</a>
+<a href="#" class="list-group-item">DevOps</a>
+</div>
+</div>
+<!-- Text Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h1 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Code</h1>
+</div>
+<div class="panel-body">
+    <ul>
+        <li><a href="#">Ansible</a></li>
+        <li><a href="#">AWS CloudFormation</a></li>
+    </ul>
+<p><button class="btn btn-default">Engage</button></p>
+</div>
+</div>
+</div
+><!--/Left Column-->
+<!-- Center Column -->
+<div class="col-sm-6">  
+<!-- Articles -->
+<div class="row">
+<article class="col-xs-12">
+<h1 class="entry-title">Network Optimization</h1>
+<p>
+<blockquote>I realise this is a long page! It's really a collection of notes I call my <strong>Network Engineering Toolkit</strong> that I like to come back to again and again. Please digest at your own pace.</blockquote>
+</p>
+<br /><br />
+<p>
+A Router can be configured to permit or deny routing table updates to other Routers in a couple of ways, such as passive interface for example, which is used to block updates going out an interface only. However, if you want to block routing updates coming into the Router as well as going out then distribution lists are the answer. Unlike passive interface which blocks all updates leaving a router, if configured correctly, you can filter your routing information, and block specific networks from the routing table.
+</p>
+This gives you greater control over your network especially where bandwidth is limited, or processing power is low. Remember that Routers can potentially maintain quite large routing tables, however, processing power is critical in any network. So to help block or allow certain routing updates we can use <strong>distribution lists</strong> and we can implement <strong>route-maps</strong> discussed later where we use what is known as <strong>policy routing</strong>.
+
+<h3 class="entry-title">Congestion</h3>
+Network congestion can be minimised and controlled to a certain extent by causing a Router to avoid a particular path and use a more optimum path. Think of diversions in traffic to move motorists away from a blocked road for example, and you have the idea. The intention is to keep traffic moving whilst making use of the best route. Later we will cover very briefly the concept of <strong>QoS (Quality of Service)</strong> another method we can employ to improve network congestion.
+
+<h3 class="entry-title">Here's a breakdown of what's covered on this page</h3>
+<ol>
+	<li><a href="#1">Access Control Lists</a></li>
+	<li><a href="#2">Standard ACLs</a></li>
+	<li><a href="#3">Distribution Lists</a></li>
+	<li><a href="#4">Inbound Filtering</a></li>
+ 	<li><a href="#5">OSPF Filtering: Inter-area verses intra-area</a></li>
+	<li><a href="#6">OSPF Intra-Area Filtering</a></li>	
+	<li><a href="#7">Configure Route Maps</a></li>
+	<li><a href="#8">Policing and shaping introduction</a></li>
+	<li><a href="#9">Cisco Auto QoS</a></li>
+	<li><a href="#10">Site to Site VPN</a></li>
+	<li><a href="#11">Routing</a></li>
+	<li><a href="#12">OSPF Troubleshooting</a></li>
+</ol>
+
+<h1 class="entry-title"><a name="1"></a>Access Control Lists (ACLs)</h1>
+<p>
+A Cisco instructor I admire once said to a class I attended, "What does an Access List do?", to which various students replied with detailed descriptions of ports and deny or permit kung fu of every kind. <blockquote>Frank replied, "No! an Access List does absolutely nothing!!!, until you apply it to an interface!"</blockquote> 
+</p>
+<br /><br />
+<p>
+So true Frank, so an Access Control List is a configuration script that controls whether a Router permits or denies packets based on criteria found in the incoming or outgoing packet header. It uses rules in this list to match traffic types in a logical sequence. This allows the Router to specifically exclude or allow information through the network. By default ACLs are not enabled on the Router.
+</p>
+To make an ACL work, the Router extracts the information from each packet received in the header. The information extracted is:
+<ul>
+ 	<li>Source IP Address</li>
+ 	<li>Destination IP address</li>
+ 	<li>Message type (Only for Ext ACL)</li>
+ 	<li>Source Port (Only for Ext ACL)</li>
+ 	<li>Destination (Only for Ext ACL)</li>
+</ul>
+
+Message type is the type of packet that is being transported, either <strong>IP/TCP</strong>, <strong>IGMP</strong>, <strong>UDP</strong> or <strong>FTP</strong> style packets. Each type of packet is dealt with separately only if specified.
+
+<strong>Source and Destination port</strong>
+
+When a host requests information from a server or another host for that matter, it sends that request with a <strong>SOURCE PORT</strong> number that tells the receiving host where to send the information once it gets back. Computers use multiple host addresses to maintain multiple connections to servers or other hosts. For example a computer may maintain multiple web pages at the same time in separate tabs in the browser. Each one that opens will open a separate host number on both the local computer and the web server. But in the whole process the computer’s IP address remains the same. Because there are so many potential host numbers available it can be difficult to control them all. The solution is to use a <strong>deny statement</strong> on the ACL to maintain control over the hosts you don't want accessing your network.
+
+<strong>Permit or deny statements</strong>. These operate by either allowing the information through the interface or stopping the information from moving on through the Router.
+
+<strong>Implicit deny</strong>
+
+<blockquote>There is an implied statement which is that any entry that does not match the list is denied access through the Router. The Router then drops the information/packet</blockquote>
+
+
+
+<h3 class="entry-title"><a name="2"></a>Standard ACLs</h3>
+Any traffic that matched this address range would be allowed through to any destination.
+<h4 class="entry-title">Standard Numbered</h4>
+<img src="../images/p1.png" />
+<br /><br />
+Or on the other hand, to deny that network use the following.
+<br /><br />
+<img src="../images/p2.png" />
+<h4 class="entry-title">Standard Named:</h4>
+<img src="../images/p3.png" />
+<br /><br />
+And to deny that network use the following.
+<br /><br />
+<img src="../images/p4.png" />
+<br /><br />
+<h4 class="entry-title">Numbered Assignment</h4>
+<br /><br />
+<img src="../images/p5.png" />
+<br /><br />
+<h4 class="entry-title">Named Assignment</h4>
+<br /><br />
+<img src="../images/p6.png" />
+<br /><br />
+<h4 class="entry-title">Extended Numbered</h4>
+<br /><br />
+<img src="../images/p7.png" />
+<br /><br />
+Or on the other hand, to deny that network use the following
+<br /><br />
+<img src="../images/p8.png" />
+<br /><br />
+<h4 class="entry-title">Extended Named</h4>
+<br /><br />
+<img src="../images/p9.png" />
+<br /><br />
+And to deny
+<br /><br />
+<img src="../images/p10.png" />
+<br /><br />
+<h4 class="entry-title">Numbered Assignment</h4>
+<br /><br />
+<img src="../images/p11.png" />
+<br /><br />
+<h4 class="entry-title">Extended Assignment</h4>
+<br /><br />
+<img src="../images/p12.png" />
+<br /><br />
+<h1 class="entry-title"><a name="3"></a>Distribution Lists</h1>
+<h4 class="entry-title">Normal Interface Distribution Lists</h4>
+Use the <strong>distribute-list</strong> command in conjunction with an <strong>access list</strong> to pick and choose which routing updates a Router will send or receive. By referencing an access list, the distribute-list creates an effective route filter. T
+<p>he access list is a set of rules that precisely controls what routes a Router will be allowed to send or receive in a routing update. The distribute-list command is available for all IP routing protocols and can be applied to either inbound or outbound routing updates. The syntax for configuring a route filter is as follows:
+</p>
+<pre lang="Bash">
+Router(config)# distribute-list <ACL_number> in | out [interface-name]</pre>
+
+So what's the difference in terms of configuration between <strong>global</strong> and interface?
+<h3 class="entry-title">GLOBAL</h3>
+<pre lang="Bash">Router(config)# Router eigrp 10 </pre>
+- starts the EIGRP routing process for autonomous system 10.
+<br /><br />
+<pre lang="Bash">Router(config-Router)# distribute-list 1 in </pre>
+<br /><br />
+- creates an incoming global distribute list that refers to access control list (ACL) 1.
+<br /><br />
+<pre lang="Bash">Router(config-Router)# distribute-list 2 out</pre>
+<br /><br />
+- creates an outgoing global distribute list that refers to ACL 2
+<br /><br />
+<h3 class="entry-title">INTERFACE</h3>
+<pre lang="Bash">Router(config-Router)# distribute-list 3 in FastEthernet0/0 </pre>
+<br /><br />
+- creates an incoming interface distribute list that refers to FastEthernet0/0 and to(ACL) 3.
+<br /><br />
+<pre lang="Bash">Router(config-Router)# distribute-list 4 out Serial0/0/0 </pre>
+<br /><br />
+- creates an incoming interface distribute list that refers to interface s0/0/0 and list (ACL) 4.
+<br /><br />
+<h4 class="entry-title">FILTER from OSPF into EIGRP</h4>
+<br /><br />
+<pre lang="Bash">Router(config-Router)# distribute-list 5 out ospf 1</pre>
+<br /><br />
+- Filters updates advertised from OSPF process ID 1 into EIGRP AS 10 according to ACL 5
+<br /><br />
+<h3 class="entry-title"><a name="4"></a>Inbound Filtering</h3>
+The way the Router behaves regarding inbound processing can be understood as follows:
+<br /><br />
+<ol>
+ 	<li>The Router extracts the routing update</li>
+ 	<li>The Router checks if there is a distribution list configured for the interface</li>
+ 	<li>If so the Router will apply the ACL rule against the networks in the update</li>
+ 	<li>If not, the Router will check for a global distriubtion list</li>
+ 	<li>If one is present, the Router will apply the ACL rule accordingly against the networks in the update</li>
+</ol>
+<br /><br />
+<h3 class="entry-title">Outbound Filtering</h3>
+<br /><br />
+The way the Router behaves regarding outbound processing can be understood as follows: (looks the same, but step 1 is different)
+<br /><br />
+<ol>
+ 	<li><strong>The Router prepares the routing update</strong></li>
+ 	<li>The Router checks if there is a distribution list configured for the interface</li>
+ 	<li>If so the Router will apply the ACL rule accordingly against the networks in the update</li>
+ 	<li>If not the Router will check for a global distribution list</li>
+ 	<li>If so the Router it will apply the ACL rule accordingly against the networks in the update</li>
+</ol>
+<br /><br />
+<h3 class="entry-title">Distribution lists impact with OSPF</h3>
+An exception to the rule is OSPF (Open Shortest Path First). This is a link-state routing protocol and is unable to use distribute-lists on individual interfaces, and may <strong>only use global distribute-lists</strong>.
+<br /><br />
+The OSPF <strong>Inbound Filtering Using Route Maps</strong> with a <strong>Distribute List</strong> feature allows users to define a route map to prevent OSPF routes from being added to the routing table. In the route map, the user can match on any attribute of the OSPF route.
+<br /><br />
+That is, the route map could be based on the following match options:
+<br /><br />
+<ul>
+ 	<li>match interface</li>
+ 	<li>match ip address</li>
+ 	<li>match ip next-hop</li>
+ 	<li>match ip route-source</li>
+ 	<li>match metric</li>
+ 	<li>match route-type</li>
+ 	<li>match tag</li>
+</ul>
+<br /><br />
+This feature can be useful during redistribution if the user tags prefixes when they get redistributed on ASBRs (Autonomous System Boundary Routers) and later uses the tag to filter the prefixes from being installed in the routing table on other Routers.
+<br /><br />
+<h4 class="entry-title">Filtering Based on Route Tag</h4>
+Users can assign tags to external routes when they are redistributed to OSPF. Then the user can deny or permit those routes in the OSPF domain by identifying that tag in the route-map and distribute-list in commands.
+<br /><br />
+<h4 class="entry-title">Filtering Based on Route Type</h4>
+In OSPF, the external routes could be Type 1 or Type 2. Users can create route maps to match either Type 1 or Type 2 and then use the <strong>distribute-list in</strong> command to filter certain prefixes. Also, route maps can identify internal routes (interarea and intra-area) and then those routes can be filtered.
+<br /><br />
+<h4 class="entry-title">Filtering Based on Route Source</h4>
+When a match is made on the route source, the route source represents the OSPF Router ID of the LSA (Link State Advertisement) originator of the LSA in which the prefix is advertised.
+<br /><br />
+<strong>Filtering Based on Interface</strong>
+When a match is done on the interface, the interface represents the outgoing interface for the route that OSPF is trying to install in the routing table.
+<br /><br />
+<h4 class="entry-title"><a name="5"></a>OSPF Filtering: Inter-area verses intra-area</h4>
+There are two points at which OSPF routes can be filtered:
+<br /><br />
+<ul>
+ 	<li>Within an Area</li>
+ 	<li>Between an Area</li>
+</ul>
+<br /><br />
+The following topology will be used to explain each case.
+<br /><br />
+<img src="../images/p13.png" />
+<br /><br />
+<h4 class="entry-title">OSPF Inter-Area Filtering</h4>
+The 192.0.2.0/24 network has been implemented on R1 for testing. The route is intended only to be propagated throughout the local area, but is currently being advertised to the entire OSPF domain (as indicated by the green arrows in the topology):
+<br /><br />
+<br /><br />
+<img src="../images/p14.png" />
+<br /><br />
+<br /><br />
+We can implement inter-area filtering (filtering between areas) on R3 to prevent the route from being advertised outside of area 10. First, we define a prefix list on R3 to deny the 192.0.2.0/24 prefix and allow all others:
+<br /><br />
+<br /><br />
+<img src="../images/p15.png" />
+<br /><br />
+<blockquote>Appending le 32 to the first prefix list entry ensures that any more-specific routes within 192.0.2.0/24 are denied as well (as opposed to only the exact /24 route)</blockquote>
+<br /><br />
+Next we reference it as an area filter within OSPF configuration. The area filter-list statement below tells the Router to apply our prefix list to routes being distributed out of area 10. (Don't forget to re-establish neighbor adjacencies afterward so that the new policy takes effect.)
+<br /><br />
+<img src="../images/p16.png" />
+<br /><br />
+We can verify that R3 is still receiving the 192.0.2.0/24 route from R1, but is not distributing it out of the local area into the backbone (area 0):
+<br /><br />
+<img src="../images/p17.png" />
+<br /><br />
+And now look at R4
+<br /><br />
+<img src="../images/p18.png" />
+<br /><br />
+<img src="../images/p19.png" />
+<br /><br />
+<h4 class="entry-title"><a name="6"></a>OSPF Intra-Area Filtering</h4>
+Now assume that we need to move the filtering point closer toward the source of the route; specifically, we want to advertise 192.0.2.0/24 from R1 to R2, but not to R3. To accomplish this, we'll need to implement intra-area filtering using the distribute-list command under OSPF configuration.
+<br /><br />
+Intra-area filtering can reference an ACL, prefix list, or route-map; for simplicity's sake, we'll reuse the same prefix-list Deny_Test_Route that was implemented in the prior example. We'll implement inbound filtering on R3 for area 10 since we want to prevent R3 from receiving the route:
+<br /><br />
+<img src="../images/p20.png" />
+<br /><br />
+Again, don't forget to reset neighbor adjacencies after applying the change.
+<br /><br />
+We can verify that R2 is still recieving the 192.0.2.0/24 route from R1 but R3 is not:
+<br /><br />
+<img src="../images/p21.png" />
+<br /><br />
+<img src="../images/p22.png" />
+<br /><br />
+<img src="../images/p23.png" />
+<br /><br />
+Note that distribute-lists do not work for outbound OSPF filtering (even though the CLI may accept the command) as OSPF is a link-state protocol and thus all Routers within an area must flood all LSAs. Although unidirectional LSA database filtering can be enabled with the database-filter parameter, it is not appropriate in this scenario (and is typically best avoided altogether).
+<br /><br />
+<h1 class="entry-title"><a name="7"></a>Configure Route Maps</h1>
+<i>Revision – Access Lists</i>
+<br /><br />
+Recall that ACLs permit or deny traffic based upon matches in a list. These statements are checked in sequential order one line at a time until a match is found. If no match is found it is important to remember that there is an implicit deny statement at the end. If you need to edit the ACL you must first remove the entire list, you cannot delete a statement or try to change the order of the statements without starting from scratch. That is why it is a good idea to prepare your ACLs in Notepad or some other Text Editor first and if you need to make any changes, you can prefix all the ACL statements with no in notepad to remove them, rewrite the modified ACL underneath and then copy and paste into the Router.
+<br /><br />
+<h3 class="entry-title">Route Maps</h3>
+The route-map command is used to configure policy routing, which is often a complicated task. Although policy routing can be used to control traffic within an autonomous system (AS), it is typically used to control routing between autonomous systems. For that reason, policy routing is used extensively with exterior gateway protocols (EGPs), such as Border Gateway Protocol (BGP).
+<br /><br />
+Route maps operate similar to access lists, by examining one line at a time until a match is found. Route maps are different from numbered access lists because they can be modified without changing the entire list.
+Each route map statement is given a number. If a sequence number is not specified, the first route map condition will automatically be numbered as ten (10). The second condition will automatically be numbered as 20, and so on. The optional sequence number can be used to indicate the position that a new route map is to have in the list of route maps already configured with the same name.
+<br /><br />
+After entering the route-map command, enter match and set commands in the route-map configuration mode. Each route-map command has a list of match and set commands associated with it. The match commands specify the match criteria. They are the conditions that should be tested to determine whether to take action. The set commands specify the set actions. They are the actions to be performed if the match criteria are met.
+<br /><br />
+<pre lang="Bash">Router(config)# access-list 5 deny 10.1.1.0 0.0.0.255
+Router(config)# access-list 5 permit any
+Router(config)# route-map <route_map_name> {permit|deny} [sequence_number]
+Router(config-route-map)# match ip address 
+Router(config-route-map)# set ip next-hop 
+Router(config-route-map)# set interface <interface_name> alternate set method for P-P links
+</pre>
+<br /><br />
+On the inbound interface apply the policy route-map.
+<br /><br />
+<pre lang="Bash">Router(config-if)# ip policy route-map <route_map_name>
+</pre>
+<br /><br />
+<h3 class="entry-title"><a name="8"></a>Policing and shaping introduction</h3>
+There are two methods to limit the amount of traffic originating from an interface: policing and shaping. When an interface is policed outbound, traffic exceeding the configured threshold is dropped (or remarked to a lower class of service). Shaping, on the other hand, buffers excess (burst) traffic to transmit during non-burst periods. Shaping has the potential to make more efficient use of bandwidth at the cost of additional overhead on the router.
+<br /><br />
+All this is just dandy, but doesn't mean much until you see its effects on real traffic. Consider the following lab topology:
+<br /><br />
+<img src="../images/p24.png" />
+<br /><br />
+We'll be using <a href="https://iperf.fr">Iperf</a> on the client (192.168.10.2) to generate TCP traffic to the server (192.168.20.2). In the middle is R1, a Cisco 3725. Its F0/1 interface will be configured for policing or shaping outbound to the server.
+<br /><br />
+<h4 class="entry-title">IPERF</h4>
+<strong><i>iperf</i></strong>
+<br /><br />
+Iperf is able to test the bandwidth available across a link by generating TCP or UDP streams and benchmarking the throughput of each. To illustrate the effects of policing and shaping, we'll configure Iperf to generate four TCP streams, which we can monitor individually. To get a feel for how Iperf works, let's do a dry run before applying any QoS policies. Below is the output from Iperf on the client end after running unrestricted across a 100 Mbit link:
+<br /><br />
+<pre lang="Bash">
+Client$ iperf -c 192.168.20.2 -t 30 -P 4
+------------------------------------------------------------
+Client connecting to 192.168.20.2, TCP port 5001
+TCP window size: 8.00 KByte (default)
+------------------------------------------------------------
+[1916] local 192.168.10.2 port 1908 connected with 192.168.20.2 port 5001
+[1900] local 192.168.10.2 port 1909 connected with 192.168.20.2 port 5001
+[1884] local 192.168.10.2 port 1910 connected with 192.168.20.2 port 5001
+[1868] local 192.168.10.2 port 1911 connected with 192.168.20.2 port 5001
+[ ID]   Interval       Transfer     Bandwidth
+[1900]  0.0-30.0 sec  84.6 MBytes  23.6 Mbits/sec
+[1884]  0.0-30.0 sec  84.6 MBytes  23.6 Mbits/sec
+[1868]  0.0-30.0 sec  84.6 MBytes  23.6 Mbits/sec
+[1916]  0.0-30.0 sec  84.6 MBytes  23.6 Mbits/sec
+[SUM]   0.0-30.0 sec   338 MBytes  94.5 Mbits/sec
+</pre>
+<br /><br />
+<strong><i>iperf</i></strong> is run with several options:
+<br /><br />
+<ul>
+ 	<li>-c - Toggles client mode, with the IP address of the server to contact</li>
+ 	<li>-t - The time to run, in seconds</li>
+ 	<li>-P - The number of parallel connections to establish</li>
+</ul>
+<br /><br />
+We can see that <i>iperf</i> is able to effectively saturate the link at around 95 Mbps (94.5 to be precise), with each stream consuming a roughly equal share of the available bandwidth.
+<br /><br />
+<h4 class="entry-title">Policing</h4>
+Our first test will measure the throughput from the client to the server when R1 has been configured to police traffic to 1 Mbit. To do this we'll need to create the appropriate QoS policy and apply it outbound to F0/1. Here's how it looks in the running config.
+<br /><br />
+<pre lang="Bash">policy-map Police
+   class class-default
+   police cir 1000000
+!
+interface FastEthernet0/1
+service-policy output Police
+</pre>
+We can then inspect our applied policy with show policy-map interface. F0/1 is being policed to 1 Mbit with a 31250 bytes burst:
+<pre lang="Bash">R1# show policy-map interface FastEthernet0/1
+Service-policy output: Police
+Class-map: class-default (match-any)
+  2070 packets, 2998927 bytes
+  5 minute offered rate 83000 bps, drop rate 0 bps
+  Match: any
+  police:
+      cir 1000000 bps, bc 31250 bytes
+      conformed 1394 packets, 1992832 bytes; actions:
+      transmit
+     	exceeded 673 packets, 1005594 bytes; actions:
+     	drop
+    	conformed 57000 bps, exceed 30000 bps
+</pre>
+<br /><br />
+Repeating the same <i>iperf</i> test now yields very different results:
+<br /><br />
+<pre lang="Bash">Client$ iperf -c 192.168.20.2 -t 30 -P 4
+------------------------------------------------------------
+Client connecting to 192.168.20.2, TCP port 5001
+TCP window size: 8.00 KByte (default)
+------------------------------------------------------------
+[1916] local 192.168.10.2 port 1922 connected with 192.168.20.2 port 5001
+[1900] local 192.168.10.2 port 1923 connected with 192.168.20.2 port 5001
+[1884] local 192.168.10.2 port 1924 connected with 192.168.20.2 port 5001
+[1868] local 192.168.10.2 port 1925 connected with 192.168.20.2 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[1884]  0.0-30.2 sec   520 KBytes   141 Kbits/sec
+[1916]  0.0-30.6 sec  1.13 MBytes   311 Kbits/sec
+[1900]  0.0-30.5 sec   536 KBytes   144 Kbits/sec
+[1868]  0.0-30.5 sec   920 KBytes   247 Kbits/sec
+[SUM]  0.0-30.6 sec  3.06 MBytes   841 Kbits/sec
+</pre>
+<br /><br />
+Notice that although we've allowed for up to 1 Mbps of traffic, Iperf has only achieved 841 Kbps. Also notice that, unlike our prior test, each flow does not receive an equal proportion of the available bandwidth. This is because policing (as configured) does not recognize individual flows; it merely drops packets whenever they threaten to exceed the configured threshold.
+<br /><br />
+Using Wireshark's IO graphing feature on a capture obtained at the server, we can observe the apparently random nature of the flows. The black line measures the aggregate throughput, and the colored lines each represent an individual TCP flow.
+<br /><br />
+<img src="../images/p25.png" />
+<br /><br />
+<h4 class="entry-title">Shaping</h4>
+In contrast to policing, we'll see that shaping handles traffic in a very organized, predictable manner. First we'll need to configure a QoS policy on R1 to shape traffic to 1 Mbit. When applying the Shape policy outbound on F0/1, be sure to remove the Police policy first with no service-policy output Police.
+<br /><br />
+<pre lang="Bash">policy-map Shape
+ class class-default
+  shape average 1000000
+!
+interface FastEthernet0/1
+ service-policy output Shape
+</pre>
+Immediately after starting our Iperf test a third time we can see that shaping is taking place:
+<pre lang="Bash">R1# show policy-map interface FastEthernet0/1
+Service-policy output: Shape
+Class-map: class-default (match-any)
+  783 packets, 1050468 bytes
+  5 minute offered rate 0 bps, drop rate 0 bps
+  Match: any
+  Traffic Shaping
+       Target/Average   Byte   Sustain   Excess    Interval  Increment
+         Rate           Limit  bits/int  bits/int  (ms)      (bytes)
+      1000000/1000000   6250   25000     25000     25        3125
+    Adapt  Queue     Packets   Bytes     Packets   Bytes     Shaping
+    Active Depth                         Delayed   Delayed   Active
+    -      69        554       715690    491       708722    yes
+</pre>
+<br /><br />
+This last test concludes with very consistent results:
+<br /><br />
+<pre lang="Bash">Client$ iperf -c 192.168.20.2 -t 30 -P 4
+------------------------------------------------------------
+Client connecting to 192.168.20.2, TCP port 5001
+TCP window size: 8.00 KByte (default)
+------------------------------------------------------------
+[1916] local 192.168.10.2 port 1931 connected with 192.168.20.2 port 5001
+[1900] local 192.168.10.2 port 1932 connected with 192.168.20.2 port 5001
+[1884] local 192.168.10.2 port 1933 connected with 192.168.20.2 port 5001
+[1868] local 192.168.10.2 port 1934 connected with 192.168.20.2 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[1916]  0.0-30.4 sec   896 KBytes   242 Kbits/sec
+[1868]  0.0-30.5 sec   896 KBytes   241 Kbits/sec
+[1884]  0.0-30.5 sec   896 KBytes   241 Kbits/sec
+[1900]  0.0-30.5 sec   896 KBytes   241 Kbits/sec
+[SUM]  0.0-30.5 sec  3.50 MBytes   962 Kbits/sec
+</pre>
+<br /><br />
+With shaping applied, Iperf is able to squeeze 962 Kbps out of the 1 Mbps link, a 14% gain over policing. However, keep in mind that the gain measured here is incidental and very much subject to change under more real-world conditions. Also notice that each stream receives a fair share of bandwidth. This even distribution is best illustrated graphically through an IO graph of a second capture:
+<br /><br />
+<img src="../images/p26.png" />
+<br /><br />
+<h4 class="entry-title"><a name="9"></a>Cisco Auto QoS</h4>
+<h3>Introduction</h3>
+<p> 
+Quality of service (QoS) is the overall performance of a telephony or computer network, particularly the performance seen by the users of the network.
+</p>
+<p>
+To quantitatively measure quality of service, several related aspects of the network service are often considered, such as error rates, bit rate, throughput, transmission delay, availability, jitter, etc.
+</p>
+<p>
+Quality of service is particularly important for the transport of traffic with special requirements. In particular, much technology has been developed to allow computer networks to become as useful as telephone networks for audio conversations, as well as supporting new applications with even stricter service demands.
+</p>
+<p>
+To assist in controlling network congestion we can also use things such as Quality of Service statements. These control how much traffic of a particular type is allowed through the network at a given time.
+</p>
+<p>
+For example, a node has been operating for a while and the users have discovered that there is a way to stream YouTube though the network. This is having negative effects on the network performance and is interrupting VoIP calls. By limiting the Quality of service for YouTube you can directly control the flow of data to and from that website.
+By adding QOS it will still allow users to stream YouTube video without affecting the VoIP traffic across the network.
+</p>
+<p>
+Quality of service statements, become important when you are tunnelling multiple service types multiple times through a single bearer.
+</p>
+<p>
+Other devices can also be used in network optimisation; they can be server cache devices that contain regularly hosted information in location such as RIVERBED.
+<h4 class="entry-title">Configuration</h4>
+To configure autoQoS for a Cisco IP phone, perform this task:
+<br /><br />
+<img src="../images/p27.png" />
+<br /><br />
+<h1 class="entry-title"><a name="10"></a>Site To Site VPN</h1>
+Here are a few notes I have to remind me how to configure VPNs, IPSec, and things to keep in my routing protocols toolkit.
+<br /><br />
+<h3 class="entry-title">Encryption</h3>
+<br /><br />
+<ul>
+ 	<li>Symmetric Keys - use the same key</li>
+ 	<li>Asymmetric Keys - use a different key (Public/Private)</li>
+</ul>
+<br /><br />
+<br /><br />
+<table border="1" style="border: #0F0" width="50%">
+<thead>
+<tr>
+    <th>Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES</td>
+<td>Symmetric</td>
+</tr>
+<tr>
+<td>3DES</td>
+<td>Symmetric</td>
+</tr>
+<tr>
+<td>AES</td>
+<td>Symmetric</td>
+</tr>
+<tr>
+<td>RC5</td>
+<td>Symmetric</td>
+</tr>
+<tr>
+<td>RSA</td>
+<td>Asymmetric</td>
+</tr>
+<tr>
+<td>DH</td>
+<td>Asymmetric</td>
+</tr>
+<tr>
+<td>El Gamal</td>
+<td>Asymmetric</td>
+</tr>
+<tr>
+<td>MD5</td>
+<td>Hash</td>
+</tr>
+<tr>
+<td>SHA-1</td>
+<td>Hash</td>
+</tr>
+<tr>
+<td>HMAC</td>
+<td>Hash</td>
+</tr>
+</tbody>
+</table>
+<br /><br />
+<h4 class="entry-title">IPSec</h4>
+Comprised of several protocols:
+<br /><br />
+<ul>
+ 	<li>AH (Authenticating Header) data origin, data integrity, anti-replay - runs in either tunnel/transport mode</li>
+ 	<li>ESP (Encapsulating Security Payload) confidentially runs in either tunnel/transport mode</li>
+ 	<li>IKE (Internet Key Exchange) comprised two phases, coming up</li>
+</ul>
+<br /><br />
+<h4 class="entry-title">IKE Operation</h4>
+<br /><br />
+<ol>
+ 	<li>Interesting Traffic detected for encryption (typically from an ACL)</li>
+ 	<li>IKE Phase 1 (IKE SA negotiation)</li>
+ 	<li>IKE Phase 2 (IPSec SA negotiation)</li>
+ 	<li>Data Transfer (encrypted)</li>
+ 	<li>Tunnel Termination - we'z done!</li>
+</ol>
+<br /><br />
+Let's break it down a bit more.
+<br /><br />
+<h4 class="entry-title">IKE Phase 1 (Main mode or Aggressive Mode)</h4>
+<br /><br />
+<ul>
+ 	<li>Initiator seeks ISAKMP (Internet Security Association and Key Management Protocol) Policy match at each end</li>
+ 	<li>Exchange public keys securely using DH (Diffie Helman)</li>
+ 	<li>Authenticate each other using encrypted form of IP address</li>
+ 	<li>IKE SA established</li>
+</ul>
+<br /><br />
+<h4 class="entry-title">IKE Phase 2 (Quick Mode Only)</h4>
+<br /><br />
+<ul>
+ 	<li>Initiator proposes parameters for IPSec SA</li>
+ 	<li>Proof of liveliness (initiator receives and acknowledges - aw!)</li>
+</ul>
+<br /><br />
+Data can now be exchanged.
+<br /><br />
+<pre lang="Bash">
+dst		src		state		conn-id	slot	status
+172.16.100.2	172.16.100.1	QM_IDLE	1		0	ACTIVE
+</pre>
+<br /><br />
+QM_IDLE is good
+<br /><br />
+Other states include:
+<br /><br />
+<ul>
+ 	<li>MM_NO_STATE - indicates a fundamental problem with IKE Phase 1 (most likely, a mismatch)</li>
+ 	<li>MM_KEY_EXCH - indicates a misconfiguration of the peer's IP address or shared key</li>
+</ul>
+<br /><br />
+<h1 class="entry-title"><a name="11"></a>Routing</h1>
+<h4 class="entry-title">Split Horizon</h4>
+<br /><br />
+Meaning:  Cannot advertise via the same interface it was learned on.
+<br /><br />
+<h4 class="entry-title">Poison Reverse</h4>
+Meaning:  Can advertise with a metric of <i>unreachable</i> when that network goes down.
+<br /><br />
+<h4 class="entry-title">RIPv2</h4>
+<br /><br />
+<ul>
+ 	<li>Multicast to 224.0.0.9</li>
+ 	<li>Sends entire table every 30 seconds</li>
+ 	<li>25 routes max table</li>
+ 	<li>Hop count 15</li>
+ 	<li>Supports clear text and MD5 authentication</li>
+ 	<li>Uses equal-cost load balancing</li>
+</ul>
+<br /><br />
+<h4 class="entry-title">EIGRP</h4>
+<br /><br />
+<ul>
+ 	<li>Multicast to 224.0.0.10</li>
+ 	<li>Sends entire only when adjacency is formed, then updates after that on change</li>
+ 	<li>Uses equal-cost by default</li>
+ 	<li>Unequal-cost can be applied with the <i>variance</i> command</li>
+</ul>
+<br /><br />
+<h4 class="entry-title">OSPF</h4>
+<br /><br />
+<ul>
+ 	<li>Multicast to 224.0.0.5 - All SPF Routers</li>
+ 	<li>Multicast to 224.0.0.6 - All DR Routers</li>
+ 	<li>Uses Router-id - Required! but if not set, uses this order
+<ul>
+ 	<li>Uses highest IP of any loopback</li>
+ 	<li>Uses highest IP of any active interface</li>
+</ul>
+</li>
+</ul>
+<br /><br />
+<h4 class="entry-title">The Router Lookup Process</h4>
+<br /><br />
+There are 4 steps:
+<br /><br />
+<ol>
+ 	<li>If multiple routes to the destination, use the longest prefix</li>
+ 	<li>If multiple routes to the destination and also same prefix, use the lowest AD (Administrative Distance)</li>
+ 	<li>If multiple routes to the destination and same prefix and same AD, use the lowest metric</li>
+ 	<li>If multiple routes to the destination and same prefix and same AD and lowest metric, then load balance</li>
+</ol>
+<br /><br />
+<h4 class="entry-title">Adminstrative Distances</h4>
+<br /><br />
+<table>
+<thead>
+<tr>
+<th>AD</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Directly connected or static route using exit interface</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Static route with next hop IP</td>
+</tr>
+<tr>
+<td>5</td>
+<td>EIGRP Summary</td>
+</tr>
+<tr>
+<td>20</td>
+<td>External EIGRP</td>
+</tr>
+<tr>
+<td>90</td>
+<td>Internal EIGRP</td>
+</tr>
+<tr>
+<td>110</td>
+<td>OSPF</td>
+</tr>
+<tr>
+<td>120</td>
+<td>RIP</td>
+</tr>
+<tr>
+<td>170</td>
+<td>External EIGRP</td>
+</tr>
+<tr>
+<td>200</td>
+<td>Internal BGP</td>
+</tr>
+<tr>
+<td>255</td>
+<td>Unknown</td>
+</tr>
+</tbody>
+</table>
+<br /><br />
+<h4 class="entry-title">Default Metrics for Route Redistribution</h4>
+<br /><br />
+<ul>
+ 	<li>RIP – hop count (default-metric 2)</li>
+ 	<li>EIGRP – 5 values to set (default-metric [bandwidth, delay, reliability, load, mtu]</li>
+ 	<li>OSPF – has a default seed metric (20) you can change</li>
+ 	<li>BGP – no need, will use the metric of the ASBR</li>
+</ul>
+<br /><br />
+<h1 class="entry-title"><a name="12"></a>OSPF Troubleshooting</h1>
+<br /><br />
+<ul>
+ 	<li>OSPF priority is 1 by default</li>
+ 	<li>OSPF priority of 0 will eliminate that router from the election on that segment</li>
+ 	<li>OSPF priority of Highest = DR, or if necessary Highest Router-id</li>
+</ul>
+<br /><br />
+<img src="../images/p28.png" />
+<br /><br />
+<img src="../images/p29.png" />
+<br /><br />
+<img src="../images/p30.png" />
+<br /><br />
+<img src="../images/p31.png" />
+<br /><br />
+<img src="../images/p32.png" />
+<br /><br />
+<h4 class="entry-title">1. Check Neighbor Adjacency</h4>
+<br /><br />
+<ul>
+ 	<li>Verify that links on routers are layer 2 operational</li>
+ 	<li>Verify layer 3 connectivity between routers</li>
+ 	<li>Verify that the interfaces on both routers are enabled for OSPF</li>
+ 	<li>Verify that the OSPF area and other required parameters match on both ends</li>
+ 	<li>Verify that the interfaces on both routers are not configured as passive</li>
+</ul>
+<h4 class="entry-title">2. Check Routing Table</h4>
+<br /><br />
+<ul>
+ 	<li>Verify OSPF neighbor is advertising correct networks</li>
+ 	<li>Verify there is a routing protocol with a lower AD (more trustworthy)</li>
+</ul>
+<br /><br />
+<h4 class="entry-title">3. Check Path Selection</h4>
+<br /><br />
+<ul>
+ 	<li>Verify the OSPF cost on both interfaces (show ip ospf interface)</li>
+</ul>
+<br /><br />
+<img src="../images/p33.png" />
+<br /><br />
+<img src="../images/p34.png" />
+<br /><br />
+<h3 class="entry-title">OSPF Network Types</h3>
+<br /><br />
+<ul>
+ 	<li>Ethernet (defaults to broadcast network, DR/BDR elected)</li>
+ 	<li>Serial (defaults to NBMA with manual neighbor statements needed)</li>
+</ul>
+<br /><br />
+<h4 class="entry-title">Stub</h4>
+<br /><br />
+Prevents LSA 5 and replaces E2 routes with a default route
+<br /><br />
+<pre lang="Bash">0*IA 0.0.0.0/0</pre>
+<br /><br />
+<h4 class="entry-title">Totally Stubby</h4>
+<br /><br />
+All external and inter-area routes are replaced with a single default route.
+<br /><br />
+<h1 class="entry-title">The End for now!</h1>
+</article>
+</div>
+<hr>
+</div><!--/Center Column-->
+<!-- Right Column -->
+<div class="col-sm-3">
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-calendar"></span> 
+Local Time
+</h3>
+</div>
+<div class="panel panel-body">
+<div class="form-group" align="center">
+<!-- clock code -->
+    <canvas class='clockClass' width='100' height='100' data-type='analog' data-ticks='lines' data-outer-color='' data-color='#00f900' data-background='#0433ff,#000000' data-numerals='arabic' data-font-family='Arial' data-gradient=''>Canvas not sopported. Update browser.</canvas>
+<!-- end clock code -->
+        <br />
+        <strong>Date</strong> 
+        <div id="jsDate">
+            <font color="#f00">
+                <script>
+                    document.getElementById("jsDate").innerHTML = dayofweek + " " + day + " " + m + " " + y;
+                </script>
+            </font>
+        </div>
+</div>
+</div>
+</div>
+<!-- Progress Bars -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-scale"></span> 
+Skillsets
+</h3>
+</div>
+<div class="panel-body">
+<div class="progress">
+<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+aria-valuemin="0" aria-valuemax="100" style="width:100%">
+100% Network Engineering
+</div>
+</div>
+<div class="progress">
+<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80"
+aria-valuemin="0" aria-valuemax="100" style="width:80%">
+80% Linux Administration
+</div>
+</div>
+<div class="progress">
+<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="45"
+aria-valuemin="0" aria-valuemax="100" style="width:45%">
+45% PHP
+</div>
+</div>
+<div class="progress">
+<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="35"
+aria-valuemin="0" aria-valuemax="100" style="width:35%">
+35% Python
+</div>
+</div>
+</div>
+</div>
+<!-- Carousel --> 
+<!-- Text Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-bullhorn"></span> 
+Calendar
+</h3>
+</div>
+<div class="panel-body">
+<div class="container">
+the calendar was here
+</div>
+</div>
+</div>
+</div>  
+</div>
+<!--/Right Column -->
+</div><!--/container-fluid-->
+<div class="container">
+<!-- footer -->
+<footer>
+    <div align="center" class="jumbotron">
+    <img src="../images/shell.png" alt=""/>
+    </div>
+<div class="small-print">
+<div class="container">
+<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
+<p>Copyright &copy; spyderops.net 2017 </p>
+</div>
+</div>
+</footer>
+<!-- end footer -->
+</div>
+</body>
+</html>

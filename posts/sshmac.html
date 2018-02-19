@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Network Security Blogs and Posts">
+        <meta name="author" content="Edward Mooney">
+    <title>Spyderops SSH From McDonalds</title>
+    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
+    <link rel="stylesheet" type="text/css" href="../css/custom.css">
+    <!-- jQuery -->
+    <script src="../js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- clock js -->
+        <script src="../js/clocklib_v0.1.js"></script>
+        <script src="../js/date.js"></script>
+    <!-- end clock js -->
+<!-- begin no right click script -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        $(this).bind("contextmenu", function(e) {
+            e.preventDefault();
+        });
+    });
+</script>
+<!-- end no right click script -->
+</head>
+<body>
+        <!-- clock JavaScript -->
+<script>
+var clockHandler;
+window.onload = function()
+{
+    clockHandler = new Clock( 20/*, "clockClass"*/ );
+    clockHandler.startStop();
+}
+</script>
+<!-- End clock JavaScript -->
+<!-- navbar -->
+<div class="container">
+<!-- Static navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+<div class="container-fluid">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+    <a class="navbar-brand" href="http://www.spyderops.net/"><img src="../images/logo2.png" alt="site logo"/></a>
+</div>
+<div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li class="active"><a href="/">Home</a></li>
+<li><a href="posts/about.html">About</a></li>
+<li><a href="../gallery/">Gallery</a></li>
+</ul>
+</div><!--/.nav-collapse -->
+</div><!--/.container-fluid -->
+</nav>
+<!-- Main Section -->
+<div class="jumbotron">
+<h1>Edward Mooney</h1>
+<p>Nice little hacks to keep you busy, I have a bit of everything here and add to it whenever I can.</p>
+<p>
+<a class="btn btn-lg btn-primary" href="../gallery/" role="button">See my photo's  here &raquo;</a>
+</p>
+</div>
+<!-- end navbar -->
+<!-- /container -->
+<div class="container-fluid">
+<!-- Left Column -->
+<div class="col-sm-3">
+<!-- Text Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-bullhorn"></span> 
+Recent Posts
+</h3>
+</div>
+<div class="panel-body">
+    <ul>
+        <li><a href="weatherpy.html">Python and Open Weather Map API</a></li>
+        <li><a href="rtrcrack.html">Crack A Password</a></li>
+        <li><a href="sshmac.html">SSH From McDonalds</a></li>
+        <li><a href="openssh.html">OpenSSH</a></li>
+        <li><a href="lvm.html">Logical Volume Management</a></li>
+        <li><a href="netopt.html">Network Optimization</a></li>
+    </ul>
+</div>
+</div>
+<!-- List-Group Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span> Categories</h1>
+</div>
+<div class="list-group">
+<a href="#" class="list-group-item">Networking</a>
+<a href="#" class="list-group-item">Security</a>
+<a href="#" class="list-group-item">Linux</a>
+<a href="#" class="list-group-item">Programming</a>
+<a href="#" class="list-group-item">DevOps</a>
+</div>
+</div>
+<!-- Text Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h1 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Code</h1>
+</div>
+<div class="panel-body">
+    <ul>
+        <li><a href="#">Ansible</a></li>
+        <li><a href="#">AWS CloudFormation</a></li>
+    </ul>
+<p><button class="btn btn-default">Engage</button></p>
+</div>
+</div>
+</div
+><!--/Left Column-->
+<!-- Center Column -->
+<div class="col-sm-6">  
+<!-- Articles -->
+<div class="row">
+<article class="col-xs-12">
+<h4>SSH from McDonalds</h4>
+<!-- 16:9 aspect ratio -->
+<div class="embed-responsive embed-responsive-4by3">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tYCKQhZ50HM"></iframe>
+</div>
+<br />
+<br />
+<br />
+<p>
+So you're at McDonalds and you have your laptop with you to browse the Internet through the free Wi-Fi. But this time you are going to use an encryption tunnel to your home router using SSH (Secure Shell). 
+</p>
+<p> 
+From there you intend to surf the net. This way your traffic is routed through this tunnel directly from your laptop to your home router. 
+</p>
+<p>
+The router is conducting <strong>port forwarding</strong> by passing packets on to your home ssh server running linux. This tunnel is protected from Wi-Fi sniffers who would see nothing but encrypted data. 
+</p>
+<p> 
+Now it won't matter how shoddy the Wi-Fi source is, McDonalds or even at an Airport for that matter, because your data is inside an encrypted tunnel. 
+</p>
+<p> 
+Since you are running from a shell you can run the text browser <a href="http://lynx.browser.org/">lynx</a> and the text email program <a href="http://www.mutt.org">mutt</a>, thereby surfing like a real hacker. Nice!
+</p>
+<br />
+<br />
+<p>
+So in my example, I am using Kali linux as the ssh server, that means I will have shell access to the system. I have set it up to log in as a normal user and not the root account. Here's how with line 3 adding the user to the sudo group:
+</p>
+<pre>
+# useradd -m spoon
+# passwd spoon
+# usermod -a -G sudo spoon
+# chsh -s /bin/bash spoon
+</pre>
+<p>
+The laptop is using the free Wi-Fi at McDonalds to access the internet. The link ends up at my home router. So from the Laptop in McDonalds, to the home router, everything is encrypted. I configured my home router to port forward <strong>ssh</strong> connections to an inside private ip address on my network. From there the connection goes back out through my home router to the internet unencrypted. At least I feel safer when using the free Wi-Fi because no one can eave's drop on my activity.
+</p>
+<p>
+I also wanted to do things a little differently to most tutorials and that's why you see in the image above my lynx browser and my mutt mail application. The lynx browser is a very easy install (apt-get install lynx) and you can see my mutt config file here. Just copy and paste it, changing <code>imap_user</code> to your email address, and <code>imap_pass</code> to your password that you use to access gmail.
+</p>
+<pre>
+set signature= "~/.signature"
+set ssl_starttls=yes
+set ssl_force_tls=yes
+set imap_user = 'myemail@gmail.com'
+set imap_pass = 'mysecretPassword'
+set from='myemail@gmail.com'
+set realname='Eddie'
+set folder = imaps://imap.gmail.com/
+set spoolfile = imaps://imap.gmail.com/INBOX
+set postponed="imaps://imap.gmail.com/[Gmail]/Drafts"
+set header_cache = "~/.mutt/cache/headers"
+set message_cachedir = "~/.mutt/cache/bodies"
+set certificate_file = "~/.mutt/certificates"
+set move = no
+set imap_keepalive = 900
+set mail_check=30
+set timeout=60
+bind index G imap-fetch-mail
+bind pager G imap-fetch-mail
+# COLORS
+color attachment brightmagenta black
+color error brightwhite red # errors yell at you in red
+color hdrdefault red black # headers
+color indicator brightyellow magenta # currently selected message
+color markers brightcyan black # the + for wrapped pager lines
+color message brightcyan black # informational messages, not mail
+color normal white black # plain text
+color quoted green black # quoted text
+color search brightgreen black # hilite search patterns in the pager
+color signature red black # signature (after "-- ") is red
+color status brightyellow blue # status bar is yellow *on blue*
+color tilde blue black # ~'s after message body
+color tree red black # thread tree in index menu is magenta
+color signature brightred black
+color underline yellow black
+color header cyan black ^(From|Subject): # Important headers
+color body magenta black "(ftp|http)://[^ ]+" # picks up URLs
+color body magenta black [-a-z_0-9.]+@[-a-z_0-9.]+
+
+# Coloring quoted text - coloring the first 7 levels:
+color quoted cyan black
+color quoted1 yellow black
+color quoted2 red black
+color quoted3 green black
+color quoted4 cyan black
+color quoted5 yellow black
+color quoted6 red black
+color quoted7 green black
+
+# Colorize smileys: :-) ;-) :-/ :-(
+color body yellow black "[;:]-[)/(|]"
+color body yellow black "[;:][)/(|]"
+color body green black "[[:alpha:]]\+://[^ ]*"
+
+color index brightyellow black ~N # New
+color index yellow black ~O # Old
+color index magenta black ~F
+color index blue black ~T
+color index red black ~D
+
+#GPG
+set pgp_decode_command="gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
+set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
+set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
+set pgp_sign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust --encrypt-to 0x00000000 -- -r %r -- %f"
+set pgp_encrypt_sign_command="pgpewrap gpg --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust --encrypt-to 0x00000000 -- -r %r -- %f"
+set pgp_import_command="gpg --no-verbose --import -v %f"
+set pgp_export_command="gpg --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r" 
+set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r" 
+
+# specify the uid to use when encrypting/signing
+set pgp_sign_as=0x71717171
+
+# this set the number of seconds to keep in memory the passpharse used to encrypt/sign
+# the more the less secure it will be
+set pgp_timeout=60
+
+# it's a regexp used against the GPG output: if it matches some line of the output
+# then mutt considers the message a good signed one (ignoring the GPG exit code)
+set pgp_good_sign="^gpg: Good signature from"
+
+# mutt uses by default PGP/GPG to sign/encrypt messages
+# if you want to use S-mime instead set the smime_is_default variable to yes
+
+# automatically sign all outcoming messages
+#set crypt_autosign
+# sign only replies to signed messages
+#set crypt_replysign
+
+# automatically encrypt outcoming messages
+#set crypt_autoencrypt=yes
+# encrypt only replies to signed messages
+#set crypt_replyencrypt=yes
+# encrypt and sign replies to encrypted messages
+#set crypt_replysignencrypted=yes
+
+# automatically verify the sign of a message when opened
+#set crypt_verify_sig=yes
+
+</pre>
+</article>
+</div>
+<hr>
+</div><!--/Center Column-->
+<!-- Right Column -->
+<div class="col-sm-3">
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-calendar"></span> 
+Local Time
+</h3>
+</div>
+<div class="panel panel-body">
+<div class="form-group" align="center">
+<!-- clock code -->
+    <canvas class='clockClass' width='100' height='100' data-type='analog' data-ticks='lines' data-outer-color='' data-color='#00f900' data-background='#0433ff,#000000' data-numerals='arabic' data-font-family='Arial' data-gradient=''>Canvas not sopported. Update browser.</canvas>
+<!-- end clock code -->
+        <br />
+        <strong>Date</strong> 
+        <div id="jsDate">
+            <font color="#f00">
+                <script>
+                    document.getElementById("jsDate").innerHTML = dayofweek + " " + day + " " + m + " " + y;
+                </script>
+            </font>
+        </div>
+</div>
+</div>
+</div>
+<!-- Progress Bars -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-scale"></span> 
+Skillsets
+</h3>
+</div>
+<div class="panel-body">
+<div class="progress">
+<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+aria-valuemin="0" aria-valuemax="100" style="width:100%">
+100% Network Engineering
+</div>
+</div>
+<div class="progress">
+<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80"
+aria-valuemin="0" aria-valuemax="100" style="width:80%">
+80% Linux Administration
+</div>
+</div>
+<div class="progress">
+<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="45"
+aria-valuemin="0" aria-valuemax="100" style="width:45%">
+45% PHP
+</div>
+</div>
+<div class="progress">
+<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="35"
+aria-valuemin="0" aria-valuemax="100" style="width:35%">
+35% Python
+</div>
+</div>
+</div>
+</div>
+<!-- Carousel --> 
+<!-- Text Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-bullhorn"></span> 
+Calendar
+</h3>
+</div>
+<div class="panel-body">
+<div class="container">
+the calendar was here
+</div>
+</div>
+</div>
+</div>  
+</div>
+<!--/Right Column -->
+</div><!--/container-fluid-->
+<div class="container">
+<!-- footer -->
+<footer>
+    <div align="center" class="jumbotron">
+    <img src="../images/shell.png" alt=""/>
+    </div>
+<div class="small-print">
+<div class="container">
+<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
+<p>Copyright &copy; spyderops.net 2017 </p>
+</div>
+</div>
+</footer>
+<!-- end footer -->
+</div>
+</body>
+</html>

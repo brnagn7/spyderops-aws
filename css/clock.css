@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
+
+
+#clock, .time {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+#clock {
+  width: 80px;
+  top: 25%;
+  margin: 0 auto;
+}
+
+.time.minutes {
+  left: 32px;
+}
+
+.time.seconds {
+  left: 64px;
+}
+
+.display {
+  position: absolute;
+  top: auto;
+  bottom: -32px;
+  left: 14px;
+  letter-spacing: 3.2rem;
+}
+
+.bit {
+  width: 28px;
+  height: 28px;
+  margin: 8px;
+  background: #0f0;
+  box-shadow: 0 0 16px #33ccff;
+  transition: all .5s ease-out;
+}
+
+.bit.blank {
+  background: black;
+  box-shadow: none;
+}
+
+@media only screen
+and (min-width: 320px)
+and (max-device-width: 768px)
+and (orientation: landscape)
+{
+  #clock {
+    top: 15%;
+  }
+}

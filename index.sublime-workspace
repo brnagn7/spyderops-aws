@@ -1,0 +1,324 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"bac",
+				"background"
+			],
+			[
+				"im",
+				"background-image"
+			],
+			[
+				"pad",
+				"padding-top"
+			],
+			[
+				"marg",
+				"margin-top"
+			],
+			[
+				"list",
+				"list-group"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"back",
+				"background-repeat"
+			],
+			[
+				"cal",
+				"calculator"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 167.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/sshmac.html",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/weatherpy.html",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/rtrcrack.html",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/openssh.html",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/netopt.html",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/lvm.html",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/csec.html",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/about.html",
+		"/Applications/MAMP/htdocs/spyderhack-aws/index.html",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/about.php",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/csec.php",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/lvm.php",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/netopt.php",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/openssh.php",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/rtrcrack.php",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/sshmac.php",
+		"/Applications/MAMP/htdocs/spyderhack-aws/posts/weatherpy.php",
+		"/Applications/MAMP/htdocs/spyderhack-aws/inc/leftcol.php",
+		"/Applications/MAMP/htdocs/spyderhack-aws/inc/rightcol.php",
+		"/Users/spoon/AWS/aws-csa-22b8b682-692a-4f18-bde6-4caa7a3de130/lambdapolicy.json",
+		"/Users/spoon/Downloads/portal-1/index.html",
+		"/Users/spoon/Documents/Covenant Eyes Project/Accountability Pal/accpal-0.1.1/src/accpal.c",
+		"/Users/spoon/Downloads/understrap/css/theme.css",
+		"/Users/spoon/Downloads/understrap/css/theme.min.css",
+		"/private/var/folders/68/5b6nz3qj6sld6g2pnp9vdh880000gn/T/fz3temp-2/theme.css",
+		"/Users/spoon/Downloads/understrap/header.php",
+		"/Users/spoon/Downloads/ComBoot-3.1-3.2.x/theme/comboot/comboot.css",
+		"/Users/spoon/Downloads/revolution/theme/colours.css",
+		"/Users/spoon/Downloads/revolution/theme/common.css",
+		"/Users/spoon/Downloads/revolution/theme/stylesheet.css",
+		"/Applications/MAMP/htdocs/wordpress/wp.sql",
+		"/Applications/MAMP/htdocs/wordpress/wp-content/plugins/learnpress/assets/css/learnpress.css",
+		"/Applications/MAMP/htdocs/mollio/ssh.php",
+		"/Applications/MAMP/htdocs/wordpress/wp-content/themes/mh-magazine-lite-child/functions.php",
+		"/Applications/MAMP/htdocs/wordpress/wp-content/themes/mh-magazine-lite-child/style.css",
+		"/Applications/MAMP/htdocs/mollio/net.php",
+		"/Applications/MAMP/htdocs/mollio/ufw.php",
+		"/Applications/MAMP/htdocs/mollio/rp.php",
+		"/Applications/MAMP/htdocs/mollio/rommon.php",
+		"/Applications/MAMP/htdocs/mollio/rt.php",
+		"/Applications/MAMP/htdocs/mollio/index.php",
+		"/Applications/MAMP/htdocs/mollio/csec.php",
+		"/Applications/MAMP/htdocs/mollio/no.php",
+		"/Applications/MAMP/htdocs/mollio/css/main.css",
+		"/Applications/MAMP/htdocs/mollio/inc/footer.php",
+		"/Applications/MAMP/htdocs/mollio/css/js-image-slider.css",
+		"/Applications/MAMP/htdocs/mollio/inc/header.php",
+		"/Applications/MAMP/htdocs/mollio/css/bootstrapfooter.css",
+		"/Applications/MAMP/htdocs/mollio/css/generic.css",
+		"/Applications/MAMP/htdocs/mollio/store.php",
+		"/Applications/MAMP/htdocs/mollio/ne.php",
+		"/Applications/MAMP/htdocs/mollio/rip.php",
+		"/Applications/MAMP/htdocs/mollio/cr.php",
+		"/Applications/MAMP/htdocs/mollio/ccna.php",
+		"/Applications/MAMP/htdocs/mollio/demo.html",
+		"/Applications/MAMP/htdocs/mollio/js/widget.js",
+		"/Applications/MAMP/htdocs/mollio/inc/connect.php",
+		"/Applications/MAMP/htdocs/mollio/users.php",
+		"/Applications/MAMP/htdocs/mollio/unix-shell.php",
+		"/Applications/MAMP/htdocs/mollio/practical.php",
+		"/Applications/MAMP/htdocs/mollio/lvm.php",
+		"/Applications/MAMP/htdocs/mollio/irc.php",
+		"/Applications/MAMP/htdocs/mollio/classr.php",
+		"/Applications/MAMP/htdocs/mollio/inc/navleftccna.php",
+		"/Applications/MAMP/htdocs/mollio/inc/coming.php",
+		"/Applications/MAMP/htdocs/mollio/css/top.css",
+		"/Applications/MAMP/htdocs/mollio/sub.php",
+		"/Applications/MAMP/htdocs/mollio/kernels.php",
+		"/Applications/MAMP/htdocs/mollio/lfs.php",
+		"/Applications/MAMP/htdocs/mollio/inc/headercsec.php",
+		"/Applications/MAMP/htdocs/mollio/inc/headerccna.php",
+		"/Applications/MAMP/htdocs/mollio/cms.php",
+		"/Applications/MAMP/htdocs/mollio/rt.html",
+		"/Applications/MAMP/htdocs/mollio/inc/headerhome.php",
+		"/Applications/MAMP/htdocs/mollio/css/practical.css",
+		"/Applications/MAMP/htdocs/mollio/rtabletabs.php",
+		"/Applications/MAMP/htdocs/mollio/demo2.html",
+		"/Applications/MAMP/htdocs/mollio/inc/nav.php",
+		"/Applications/MAMP/htdocs/mollio/js/js-image-slider.js",
+		"/Applications/MAMP/htdocs/mollio/js/mcVideoPlugin.js",
+		"/Applications/MAMP/htdocs/mollio/slider.php",
+		"/Applications/MAMP/htdocs/mollio/inc/config.php",
+		"/Applications/MAMP/htdocs/mollio/tpl/homepage.php",
+		"/Applications/MAMP/htdocs/mollio/tpl/include/footer.php",
+		"/Applications/MAMP/htdocs/mollio/cls/Article.php",
+		"/Applications/MAMP/htdocs/mollio/CMS/classes/Article.php",
+		"/Applications/MAMP/htdocs/mollio/CMS/config.php",
+		"/Applications/MAMP/htdocs/mollio/CMS/index.php",
+		"/Applications/MAMP/htdocs/mollio/tpl/viewArticle.php",
+		"/Applications/MAMP/htdocs/mollio/admin.php",
+		"/Applications/MAMP/htdocs/mollio/tpl/archive.php",
+		"/Applications/MAMP/htdocs/mollio/tpl/admin/loginForm.php",
+		"/Applications/MAMP/htdocs/mollio/tpl/admin/listArticles.php",
+		"/Applications/MAMP/htdocs/mollio/tpl/admin/editArticle.php",
+		"/Applications/MAMP/htdocs/mollio/tables.sql",
+		"/Applications/MAMP/htdocs/mollio/homepage.php",
+		"/Applications/MAMP/htdocs/mollio/inc/analyticstracking.php",
+		"/Applications/MAMP/htdocs/mollio/index.html",
+		"/Applications/MAMP/htdocs/mollio/inc/navleftcsec.php",
+		"/Applications/MAMP/htdocs/mollio/pagination.php",
+		"/Applications/MAMP/htdocs/mollio/template.php",
+		"/Applications/MAMP/htdocs/todolist/.htaccess",
+		"/Applications/MAMP/htdocs/todolist/config.php",
+		"/Applications/MAMP/htdocs/todolist/index.php",
+		"/Applications/MAMP/htdocs/todolist/libraries/core/databases/mysql_database.php",
+		"/Applications/MAMP/htdocs/mollio/css/splash.css",
+		"/Applications/MAMP/htdocs/mollio/config.php",
+		"/Applications/MAMP/htdocs/mollio/hero.html",
+		"/Applications/MAMP/htdocs/mollio/footer.php",
+		"/Applications/MAMP/htdocs/mollio/coming.php",
+		"/Applications/MAMP/htdocs/mollio/header.php",
+		"/Applications/MAMP/htdocs/mollio/navleft.php",
+		"/Applications/MAMP/htdocs/mollio/css/contact.css",
+		"/Applications/MAMP/htdocs/mollio/js/common.js",
+		"/Applications/MAMP/htdocs/mollio/js/captcha.js",
+		"/Applications/MAMP/htdocs/mollio/subm.php",
+		"/Applications/MAMP/htdocs/mollio/typeA.html",
+		"/Applications/MAMP/htdocs/mollio/typeC.html",
+		"/Users/spoon/Downloads/spyder12_wp396-2.sql",
+		"/Users/spoon/Downloads/spyder12_wp396.sql",
+		"/Applications/MAMP/htdocs/spops/wp-content/uploads/elementor/css/post-88.css",
+		"/Applications/MAMP/htdocs/spops/wp-content/uploads/elementor/css/post-86.css",
+		"/Applications/MAMP/htdocs/spops/wp-content/uploads/elementor/css/post-84.css",
+		"/Applications/MAMP/htdocs/spops/wp-admin/setup-config.php",
+		"/Applications/MAMP/htdocs/spops/wp-admin/about.php",
+		"/Applications/MAMP/htdocs/spops/wp-content/themes/colormag/index.php",
+		"/Applications/MAMP/htdocs/spops/wp-login.php",
+		"/Applications/MAMP/htdocs/spops/wp-settings.php"
+	],
+	"find":
+	{
+		"height": 29.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 29.0
+	},
+	"input":
+	{
+		"height": 37.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "index.sublime-project",
+	"replace":
+	{
+		"height": 54.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 242.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Network Security Blogs and Posts">
+        <meta name="author" content="Edward Mooney">
+    <title>Spyderops Logical Volume Management</title>
+    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
+    <link rel="stylesheet" type="text/css" href="../css/custom.css">
+    <!-- jQuery -->
+    <script src="../js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- clock js -->
+        <script src="../js/clocklib_v0.1.js"></script>
+        <script src="../js/date.js"></script>
+    <!-- end clock js -->
+<!-- begin no right click script -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        $(this).bind("contextmenu", function(e) {
+            e.preventDefault();
+        });
+    });
+</script>
+<!-- end no right click script -->
+</head>
+<body>
+        <!-- clock JavaScript -->
+<script>
+var clockHandler;
+window.onload = function()
+{
+    clockHandler = new Clock( 20/*, "clockClass"*/ );
+    clockHandler.startStop();
+}
+</script>
+<!-- End clock JavaScript -->
+<!-- navbar -->
+<div class="container">
+<!-- Static navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+<div class="container-fluid">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+    <a class="navbar-brand" href="http://www.spyderops.net/"><img src="../images/logo2.png" alt="site logo"/></a>
+</div>
+<div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li class="active"><a href="/">Home</a></li>
+<li><a href="posts/about.html">About</a></li>
+<li><a href="../gallery/">Gallery</a></li>
+</ul>
+</div><!--/.nav-collapse -->
+</div><!--/.container-fluid -->
+</nav>
+<!-- Main Section -->
+<div class="jumbotron">
+<h1>Edward Mooney</h1>
+<p>Nice little hacks to keep you busy, I have a bit of everything here and add to it whenever I can.</p>
+<p>
+<a class="btn btn-lg btn-primary" href="../gallery/" role="button">See my photo's  here &raquo;</a>
+</p>
+</div>
+<!-- end navbar -->
+<!-- /container -->
+<div class="container-fluid">
+<!-- Left Column -->
+<div class="col-sm-3">
+<!-- Text Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-bullhorn"></span> 
+Recent Posts
+</h3>
+</div>
+<div class="panel-body">
+    <ul>
+        <li><a href="weatherpy.html">Python and Open Weather Map API</a></li>
+        <li><a href="rtrcrack.html">Crack A Password</a></li>
+        <li><a href="sshmac.html">SSH From McDonalds</a></li>
+        <li><a href="openssh.html">OpenSSH</a></li>
+        <li><a href="lvm.html">Logical Volume Management</a></li>
+        <li><a href="netopt.html">Network Optimization</a></li>
+    </ul>
+</div>
+</div>
+<!-- List-Group Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h1 class="panel-title"><span class="glyphicon glyphicon-random"></span> Categories</h1>
+</div>
+<div class="list-group">
+<a href="#" class="list-group-item">Networking</a>
+<a href="#" class="list-group-item">Security</a>
+<a href="#" class="list-group-item">Linux</a>
+<a href="#" class="list-group-item">Programming</a>
+<a href="#" class="list-group-item">DevOps</a>
+</div>
+</div>
+<!-- Text Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h1 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Code</h1>
+</div>
+<div class="panel-body">
+    <ul>
+        <li><a href="#">Ansible</a></li>
+        <li><a href="#">AWS CloudFormation</a></li>
+    </ul>
+<p><button class="btn btn-default">Engage</button></p>
+</div>
+</div>
+</div
+><!--/Left Column-->
+<!-- Center Column -->
+<div class="col-sm-6">  
+<!-- Articles -->
+<div class="row">
+<article class="col-xs-12">
+<h1>Linux Logical Volume Tutorial</h1>
+<h3>Introduction</h3>
+<p>
+<b>Logical Volume Management</b> (LVM) introduces an abstraction between physical and logical storage that permits a more versatile use of filesystems. LVM uses the Linux device mapper feature (/dev/mapper). 
+</p>
+<p> 
+<a href="https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)">https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)</a>
+</p>
+<p> 
+So what's the device mapper? <a href="https://en.wikipedia.org/wiki/Device_mapper">https://en.wikipedia.org/wiki/Device_mapper</a>
+</p>
+<p> 
+<b>The device mapper</b> is a framework provided by the Linux kernel for mapping physical block devices onto higher-level virtual block devices. It forms the foundation of LVM2, software RAIDs and dm-crypt disk encryption, and offers additional features such as file system snapshots.
+</p>
+<p>
+Device mapper works by passing data from a virtual block device, which is provided by the device mapper itself, to another block device. Data can be also modified in transition, which is performed, for example, in the case of device mapper providing disk encryption or simulation of unreliable hardware behavior.
+</p>
+<p>
+Disks, partitions, and RAID devices are made of Physical Volumes, which are grouped into a Volume Group.
+A Volume Group is divided into small fixed-size chunks called Physical Extents, which are mapped 1-to-1 to Logical Extents.
+</p>
+<p> 
+Logical Extents are grouped into Logical Volumes, on which filesystems are created. <a href="https://www.howtoforge.com/linux_lvm">https://www.howtoforge.com/linux_lvm</a>
+</p>
+<h3></h3>
+<table border="1">
+<thead>
+<tr>
+<th>Logical Volume Management</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>partition table</th>
+</tr>
+<tr>
+    <td><img src="../images/lvm-1.png" alt="" width="575" height="121"></td>
+</tr>
+</tbody>
+</table>
+<h3>Commands</h3>
+Taken from the Linux Quick Reference Guide by Daniele Raffo at <a href="https://perso.crans.org/~raffo/books/linux-guide.pdf">https://perso.crans.org/~raffo/books/linux-guide.pdf</a>
+<table border="1" style="border: #0F0" width="50%">
+<thead>
+<tr>
+<th colspan="6">LVM Commands</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th colspan="2">PV commands</th>
+<th colspan="2">VG commands</th>
+<th colspan="2">LV commands</th>
+</tr>
+<tr>
+<td><pre>pvs</pre></td>
+<td>Report information about Physical Volumes</td>
+<td><pre>vgs</pre></td>
+<td>Report information about Volume Groups</td>
+<td><pre>lvs</pre></td>
+<td>Report information about Logical Volumes</td>
+</tr>
+<tr>
+<td><pre>pvscan</pre></td>
+<td>Scan all disks for Physical Volumes</td>
+<td><pre>vgscan</pre></td>
+<td>Scan all disks for Volume Groups</td>
+<td><pre>lvscan</pre></td>
+<td>Scan all disks for Logical Volumes</td>
+</tr>
+<tr>
+<td><pre>pvdisplay</pre></td>
+<td>Display Physical Volume attributes</td>
+<td><pre>vgdisplay</pre></td>
+<td>Display Volume Group attributes</td>
+<td><pre>lvdisplay</pre></td>
+<td>Display Logical Volume attributes</td>
+</tr>
+<tr>
+<td><pre>pvck</pre></td>
+<td>Check Physical Volume metadata</td>
+<td><pre>vgck</pre></td>
+<td>Check Volume Group metadata</td>
+<td><pre></pre></td>
+<td></td>
+</tr>
+<tr>
+<td><pre>pvcreate</pre></td>
+<td>Initialize a disk or partition for use with LVM</td>
+<td><pre>vgcreate</pre></td>
+<td>Create a Volume Group using Physical Volumes</td>
+<td><pre>lvcreate</pre></td>
+<td>Create a Logical Volume in a Volume Group</td>
+</tr>
+<tr>
+<td><pre>pvchange</pre></td>
+<td>Change Physical Volume attributes</td>
+<td><pre>vgchange</pre></td>
+<td>Change Volume Group attributes</td>
+<td><pre>lvchange</pre></td>
+<td>Change Logical Volume attributes</td>
+</tr>
+<tr>
+<td><pre>pvremove</pre></td>
+<td>Remove a Physical Volume</td>
+<td><pre>vgremove</pre></td>
+<td>Remove a Volume Group</td>
+<td><pre>lvremove</pre></td>
+<td>Remove a Logical Volume</td>
+</tr>
+<tr>
+<td><pre>pvresize</pre></td>
+<td>Resize a disk or partition in use with LVM</td>
+<td><pre>vgmerge</pre></td>
+<td>Merge two Volume Groups</td>
+<td><pre>lvresize</pre></td>
+<td>Modify the size of a Logical Volume</td>
+</tr>
+</tbody>
+</table>
+<h3>How to create a Logical Volume</h3>
+<ol>
+ 	<li>Add a new physical or virtual disk to the machine (eg; /dev/sda)</li>
+ 	<li>Check it is detected - <pre>lsblk</pre></li>
+ 	<li>Create a new partition on it (type 0x8E = Linux LVM) with <pre>fdisk /dev/sda</pre></li>
+ 	<li>Initialize the Physical Volume to be used with LVM with <pre>pvcreate /dev/sda1</pre></li>
+ 	<li>Create a Volume Group (<pre>myvg0</pre>) and define the size of Physical Extents to 8 Mb (default is 4Mb) with <pre>vgcreate -s 8M myvg0 /dev/sda1</pre></li>
+ 	<li>Or you could add the Physical Volume to an existing Volume Group with <pre>vgextend myvg0 /dev/sda1</pre></li>
+ 	<li>Create a Logical Volume (size 1024Mb called <pre>mylv</pre> on <pre>myvg0</pre>) with <pre>lvcreate -L 1024M -n mylv myvg0</pre></li>
+ 	<li>Mount the Logical Volume and use it - <pre>mount /dev/myvg0/mylv /mnt/work</pre> (don't forget to create <pre>/mnt/work</pre> directory first).</li>
+</ol>
+<h3>How to increase the size of a Logical Volume</h3>
+<ol>
+ 	<li>Add a new physical or virtual disk</li>
+ 	<li>Partition the disk with <pre>fdisk /dev/sdc</pre></li>
+ 	<li>Initialize the disk with <pre>pvcreate /dev/sdc</pre></li>
+ 	<li>Add it to an existing Volume Group with <pre>vgextend myvg0 /dev/sdc</pre></li>
+ 	<li>Extend the Logical Volume by 2 Gb with <pre>lvextend -L 2048M /dev/myvg0/mylv</pre></li>
+ 	<li>Lastly, extend the filesystem with <pre>resize2fs /dev/myvg0/mylv</pre></li>
+</ol>
+<h3>How to reduce the size of a Logical Volume</h3>
+<ol>
+ 	<li>Shrink the system with <pre>resize2fs /dev/myvg0/mylv 900M</pre> OR</li>
+ 	<li>Shrink the system with <pre>lvreduce -L 900M /dev/myvg0/mylv</pre> OR</li>
+ 	<li>Shrink the system with <pre>lvresize -L-900M /dev/myvg0/mylv</pre></li>
+</ol>
+<h3>Finally, How to snapshot and backup a Logical Volume</h3>
+<ol>
+ 	<li>Create the snapshot just like another Logical Volume <pre>lvcreate -s -L 1024M -n snapshot0 /dev/myvg0/mylv</pre></li>
+ 	<li>Backup the snapshot with <pre>tar cvzf snapshot0.tar.gz snapshot0</pre></li>
+ 	<li>Delet the snapshot with <pre>lvremove /dev/myvg0/snapshot0</pre></li>
+</ol>
+</article>
+</div>
+<hr>
+</div><!--/Center Column-->
+<!-- Right Column -->
+<div class="col-sm-3">
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-calendar"></span> 
+Local Time
+</h3>
+</div>
+<div class="panel panel-body">
+<div class="form-group" align="center">
+<!-- clock code -->
+    <canvas class='clockClass' width='100' height='100' data-type='analog' data-ticks='lines' data-outer-color='' data-color='#00f900' data-background='#0433ff,#000000' data-numerals='arabic' data-font-family='Arial' data-gradient=''>Canvas not sopported. Update browser.</canvas>
+<!-- end clock code -->
+        <br />
+        <strong>Date</strong> 
+        <div id="jsDate">
+            <font color="#f00">
+                <script>
+                    document.getElementById("jsDate").innerHTML = dayofweek + " " + day + " " + m + " " + y;
+                </script>
+            </font>
+        </div>
+</div>
+</div>
+</div>
+<!-- Progress Bars -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-scale"></span> 
+Skillsets
+</h3>
+</div>
+<div class="panel-body">
+<div class="progress">
+<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+aria-valuemin="0" aria-valuemax="100" style="width:100%">
+100% Network Engineering
+</div>
+</div>
+<div class="progress">
+<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80"
+aria-valuemin="0" aria-valuemax="100" style="width:80%">
+80% Linux Administration
+</div>
+</div>
+<div class="progress">
+<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="45"
+aria-valuemin="0" aria-valuemax="100" style="width:45%">
+45% PHP
+</div>
+</div>
+<div class="progress">
+<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="35"
+aria-valuemin="0" aria-valuemax="100" style="width:35%">
+35% Python
+</div>
+</div>
+</div>
+</div>
+<!-- Carousel --> 
+<!-- Text Panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">
+<span class="glyphicon glyphicon-bullhorn"></span> 
+Calendar
+</h3>
+</div>
+<div class="panel-body">
+<div class="container">
+the calendar was here
+</div>
+</div>
+</div>
+</div>  
+</div>
+<!--/Right Column -->
+</div><!--/container-fluid-->
+<div class="container">
+<!-- footer -->
+<footer>
+    <div align="center" class="jumbotron">
+    <img src="../images/shell.png" alt=""/>
+    </div>
+<div class="small-print">
+<div class="container">
+<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
+<p>Copyright &copy; spyderops.net 2017 </p>
+</div>
+</div>
+</footer>
+<!-- end footer -->
+</div>
+</body>
+</html>
