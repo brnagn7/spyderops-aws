@@ -10,6 +10,7 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.3.0.min.js"></script>
     <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
     <link rel="stylesheet" type="text/css" href="../css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/gallery.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrapfooter.css">
     <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <!-- jQuery -->
@@ -22,23 +23,46 @@
 </head>
 <body onload="myImages()">
 <style>
-.thumbnail img {
-    height:300px;
-    width:100%;
+img {
+    image-orientation: from-image;
 }
 </style>
 <!-- navbar -->
 <div class="container">
-    <div class="jumbotron">
+<!-- Static navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+    <a class="navbar-brand" href="http://www.spyderops.net/"><img src="../images/logo2.png" alt="site logo"/></a>
+</div>
+<div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li class="active"><a href="/">Home</a></li>
+<li><a href="posts/about.html">About</a></li>
+<li><a href="gallery/">Gallery</a></li>
+</ul>
+</div><!--/.nav-collapse -->
+</nav>
+<!-- Main Section -->
+<div class="jumbotron">
         <h1><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Spyderops Image Gallery</h1>
         <p>A selection of images from my camera and iPhone</p>
-    </div>
-    <div class="col-container"></div>    
 </div>
+<!-- end navbar -->
+</div>
+<!-- /container -->
+    <div class="col-container">
+            <div class="gallery"></div>
+    </div>
 <script type="text/javascript">
 function myImages()
 {
-    const parent = document.querySelector('.col-container');
+    const parent = document.querySelector('.gallery');
 
         var contentLength = 0;
             AWS.config.update({
@@ -58,12 +82,10 @@ function myImages()
                 } else {
                     contentLength = response.Contents.length;
                     for(var i = 0; i < contentLength; i++){
-                        parent.insertAdjacentHTML('beforeend', '<div class="col-md-3 col-sm-6">'
-                        + '<div class="col">'
-                        + '<div class="thumbnail">'
+                        parent.insertAdjacentHTML('beforeend', '<figure>'
                         + '<img src="https://dy7qbv6nhj8ka.cloudfront.net/'
                         + response.Contents[i].Key 
-                        + '"></div></div></div>');
+                        + '" /></figure>');
                     }
                     console.log(response)
                 }                
@@ -92,6 +114,7 @@ function myImages()
 </nav>
 
 </div><!--/container-fluid-->
+
 <div class="container">
 <!-- footer -->
 <footer>
