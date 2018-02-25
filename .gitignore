@@ -4,3 +4,6 @@ jspm_packages
 
 # Serverless directories
 .serverless
+
+# gallery index.html with aws code
+gallery/index.html
