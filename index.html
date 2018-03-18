@@ -6,6 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Network Security Blogs and Posts">
         <meta name="author" content="Edward Mooney">
+            <!-- ios and safari support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="PWAGram">
+            <!-- ie support -->
+  <meta name="msapplication-TileImage" content="/src/images/icons/app-icon-144x144.png">
+  <meta name="msapplication-TileColor" content="#fff">
+  <meta name="theme-color" content="#2e372c">
     <title>Network Security Home of Edward Mooney</title>
     <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
     <link rel="stylesheet" type="text/css" href="css/custom.css">
@@ -19,6 +27,16 @@
         <script src="js/clocklib_v0.1.js"></script>
         <script src="js/date.js"></script>
     <!-- end clock js -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- ios and safari support -->
+    <link rel="apple-touch-icon" href="/src/images/icons/icon-128x128.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="/src/images/icons/icon-96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" href="/src/images/icons/icon-128x128.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="/src/images/icons/icon-144x144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="/src/images/icons/icon-152x152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="/src/images/icons/icon-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="/src/images/icons/icon-384x384.png" sizes="384x384">
+    <link rel="apple-touch-icon" href="/src/images/icons/icon-512x512.png" sizes="512x512">
 </head>
 <body>
     <!-- clock JavaScript -->
@@ -42,13 +60,13 @@ window.onload = function()
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 </button>
-    <a class="navbar-brand" href="http://www.spyderops.net/"><img src="../images/logo2.png" alt="site logo"/></a>
+    <a class="navbar-brand" href="http://www.spyderops.net/"><img src="images/logo2.png" alt="site logo"/></a>
 </div>
 <div id="navbar" class="navbar-collapse collapse">
 <ul class="nav navbar-nav">
-<li class="active"><a href="/">Home</a></li>
-<li><a href="posts/about.html">About</a></li>
-<li><a href="gallery/">Gallery</a></li>
+<li class="active"><a href="/"><span  class="glyphicon glyphicon-home"></span> Home</a></li>
+<li><a href="posts/about.html"><span  class="glyphicon glyphicon-text-background"></span> About</a></li>
+<li><a href="gallery/"><span class="glyphicon glyphicon-camera"></span> Gallery</a></li>
 </ul>
 </div><!--/.nav-collapse -->
 </nav>
@@ -101,14 +119,11 @@ Recent Posts
 <!-- Text Panel -->
 <div class="panel panel-default">
 <div class="panel-heading">
-<h1 class="panel-title"><span class="glyphicon glyphicon-cog"></span> Code</h1>
+<h1 class="panel-title"><span class="glyphicon glyphicon-cloud"></span> Weather</h1>
 </div>
 <div class="panel-body">
-    <ul>
-        <li><a href="#">Ansible</a></li>
-        <li><a href="#">AWS CloudFormation</a></li>
-    </ul>
-<p><button class="btn btn-default">Engage</button></p>
+        <div id="openweathermap-widget-12"></div>
+        <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 12,cityid: '4559575',appid: '682279a38a0d67660e26562480875681',units: 'metric',containerid: 'openweathermap-widget-12',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
 </div>
 </div>
 </div
@@ -118,7 +133,7 @@ Recent Posts
 <!-- Articles -->
 <div class="row">
 <article class="col-xs-12">
-    <h2>Python and Open Weather Map API</h2>
+    <h2><a href="posts/weatherpy.html">Python and Open Weather Map API</a></h2>
 <p>I like python and programming in general, this page is nice and brief and demonstrates how python can be used to query an external API such as Open Weather Map to get the weather for any Town. </p>
 <p><a href="posts/weatherpy.html"><button class="btn btn-default">Read More</button></a></p>
 <p class="pull-right"><span class="label label-default">programming</span> <span class="label label-default">python</span> <span class="label label-default">DEC 23rd 2017 by Eddie</span></p>
@@ -132,7 +147,7 @@ Recent Posts
 <hr>
 <div class="row">
 <article class="col-xs-12">
-    <h2>Crack a password using the router</h2>
+    <h2><a href="posts/rtrcrack.html">Crack a password using the router</a></h2>
 <p>You can use the router IOS itself to crack a password. One caveat though. It must be a Type 7 password, you know the old MD7 Vigenere cipher from the 16th Century. Hang on! Can’t I do that online, you know </p>
 <p><a href="posts/rtrcrack.html"><button class="btn btn-default">Read More</button></a></p>
 <p class="pull-right"><span class="label label-default">routers</span> <span class="label label-default">networking</span> <span class="label label-default">OCT 17th 2017 by Eddie</span></p>
@@ -146,7 +161,7 @@ Recent Posts
 <hr>
 <div class="row">
 <article class="col-xs-12">
-<h2>SSH from McDonalds</h2>
+<h2><a href="posts/sshmac.html">SSH from McDonalds</a></h2>
 <p>So you’re at McDonalds and you have your laptop with you to browse the Internet through the free Wi-Fi. But this time it’s different, you are going to use an encryption tunnel to your home router using SSH (Secure Shell). From there you intend to surf the net. This way your traffic </p>
 <p><a href="posts/sshmac.html"><button class="btn btn-default">Read More</button></a></p>
 <p class="pull-right"><span class="label label-default">security</span> <span class="label label-default">networking</span> <span class="label label-default">OCT 18th 2017 by Eddie</span></p>
@@ -160,7 +175,7 @@ Recent Posts
 <hr>      
 <div class="row">
 <article class="col-xs-12">
-<h2>CCNA Security</h2>
+<h2><a href="posts/csec.html">CCNA Security</a></h2>
 <p>This is a concise but comprehensive notebook I put together called <strong>CLI Quick Reference</strong></p>
 <p><a href="posts/csec.html"><button class="btn btn-default">Read More</button></a></p>
 <p class="pull-right"><span class="label label-default">security</span> <span class="label label-default">networking</span> <span class="label label-default">OCT 20th 2017 by Eddie</span></p>
@@ -174,7 +189,7 @@ Recent Posts
 <hr>
 <div class="row">
 <article class="col-xs-12">
-<h2>Open SSH best practices</h2>
+<h2><a href="posts/openssh.html">Open SSH best practices</a></h2>
 <p>I really love using ssh to do different things on the network. It’s a cryptographic network protocol perfect for initiating text-based shell sessions to remote machines in a secure way. Remember, encryption is good because it implements privacy. OpenSSH is the standard SSH client and server used by most versions of </p>
 <p><a href="posts/openssh.html"><button class="btn btn-default">Read More</button></a></p>
 <p class="pull-right"><span class="label label-default">security</span> <span class="label label-default">networking</span> <span class="label label-default">NOV 12th 2017 by Eddie</span></p>
